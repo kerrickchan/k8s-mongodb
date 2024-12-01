@@ -38,13 +38,13 @@ spec:
         image: mongo:latest
         resources:
           requests:
-            cpu: 500m
-            memory: 1Gi
-            ephemeral-storage: 2Gi
+            cpu: 1000m
+            memory: 2Gi
+            ephemeral-storage: 10Gi
           limits:
             cpu: 2000m
             memory: 2Gi
-            ephemeral-storage: 4Gi
+            ephemeral-storage: 10Gi
         command:
           - "mongod"
           - "--replSet"
@@ -62,11 +62,11 @@ spec:
           requests:
             cpu: 500m
             memory: 1Gi
-            ephemeral-storage: 1Gi
+            ephemeral-storage: 2Gi
           limits:
-            cpu: 2000m
-            memory: 2Gi
-            ephemeral-storage: 4Gi
+            cpu: 1000m
+            memory: 1Gi
+            ephemeral-storage: 2Gi
         command:
           - "sh"
           - "-c"
@@ -85,6 +85,4 @@ spec:
       accessModes: ["ReadWriteOnce"]
       resources:
         requests:
-          storage: 10Gi
-        limits:
           storage: 10Gi
