@@ -9,6 +9,7 @@ This guide explains the deployment of a **MongoDB Replica Set** in Kubernetes us
 - [YAML Specification](#yaml-specification)
 - [How It Works](#how-it-works)
 - [Key Benefits](#key-benefits)
+- [Accessing MongoDB](#accessing-mongodb)
 
 ---
 
@@ -56,3 +57,26 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: mongodb-sa
+
+```
+
+## Accessing MongoDB
+
+1. Get the LoadBalancer IP:
+
+```bash
+kubectl get service mongodb-loadbalancer
+```
+
+2. Connect to MongoDB using localhost:
+
+```bash
+mongosh "mongodb://localhost:27017"
+```
+
+Note: The LoadBalancer service is exposing MongoDB on localhost:27017. Make sure no other service is using this port locally.
+
+For connecting from applications, use the connection string:
+```
+mongodb://localhost:27017/?directConnection=true
+```
