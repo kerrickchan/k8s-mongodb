@@ -73,36 +73,6 @@ spec:
         volumeMounts:
           - name: mongodb-data
             mountPath: /data/db
-      initContainers:
-      - name: init-mongo
-        image: mongo:latest
-        resources:
-          requests:
-            cpu: 500m
-            memory: 1Gi
-            ephemeral-storage: 2Gi
-          limits:
-            cpu: 1000m
-            memory: 1Gi
-            ephemeral-storage: 2Gi
-        command:
-          - "sh"
-          - "-c"
-          - >
-            if [ "$(hostname)" == "mongodb-0" ]; then
-              mongod --replSet rs0 --bind_ip_all --fork --logpath /var/log/mongodb.log;
-              mongo --eval "rs.initiate({
-                _id: 'rs0',
-                members: [
-                  {_id: 0, host: 'mongodb-0.mongodb-headless-service:27017'},
-                  {_id: 1, host: 'mongodb-1.mongodb-headless-service:27017'},
-                  {_id: 2, host: 'mongodb-2.mongodb-headless-service:27017'}
-                ]
-              })"
-            fi
-        volumeMounts:
-          - name: mongodb-data
-            mountPath: /data/db
   volumeClaimTemplates:
   - metadata:
       name: mongodb-data
